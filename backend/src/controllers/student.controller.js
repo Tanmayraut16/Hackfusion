@@ -27,7 +27,9 @@ const registerStudent = async (req, res) => {
 
     await student.save();
 
-    res.status(201).json({ message: "Student registered. Please wait for admin verification." });
+    res.status(201).json({
+      message: "Student registered. Please wait for admin verification.",
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
   }
@@ -54,7 +56,7 @@ const loginStudent = async (req, res) => {
     const token = jwt.sign(
       { studentId: student._id, role: student.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "12h" }
     );
 
     res.status(200).json({ message: "Student login successful", token });

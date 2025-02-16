@@ -1,6 +1,9 @@
 // routes/studentRoutes.js
 import express from "express";
-import { loginStudent, registerStudent } from "../controllers/student.controller.js";
+import {
+  loginStudent,
+  registerStudent,
+} from "../controllers/student.controller.js";
 
 const router = express.Router();
 
@@ -10,4 +13,4 @@ router.post("/register", registerStudent);
 // Login for verified students
 router.post("/login", loginStudent);
 
-export default router; // Corrected export
+export default router;

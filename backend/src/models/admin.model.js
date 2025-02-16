@@ -1,25 +1,35 @@
-// models/Student.js
-import mongoose from mongoose;
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
-const adminSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
+const adminSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      default: "Admin",
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, // Ensure it's a valid email
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    default: "admin",
-  },
-}, {timestamps: true});
+  { timestamps: true }
+);
 
-module.exports = mongoose.model("Admin", adminSchema);
+const Admin = mongoose.model("Admin", adminSchema);
+
+// Ensure Admin is created once
+(async () => {
+  const existingAdmin = await Admin.findOne({ email: "admin@sggs.ac.in" });
+  if (!existingAdmin) {
+    const hashedPassword = await bcrypt.hash("Admin@123", 10);
+    await Admin.create({ email: "admin@sggs.ac.in", password: hashedPassword });
+    console.log("Default Admin Created");
+  }
+})();
+
+export default Admin;
