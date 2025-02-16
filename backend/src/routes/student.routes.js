@@ -1,16 +1,18 @@
-// routes/studentRoutes.js
 import express from "express";
 import {
   loginStudent,
   registerStudent,
 } from "../controllers/student.controller.js";
+// import { verifyStudent } from "../middlewares/auth.middlware.js"; // Import Middleware
 
 const router = express.Router();
 
-// Register a new student
 router.post("/register", registerStudent);
-
-// Login for verified students
 router.post("/login", loginStudent);
+
+// Protected Routes (Require Student Authentication)
+// router.get("/profile", verifyStudent, (req, res) => {
+//   res.json({ student: req.user });
+// });
 
 export default router;
