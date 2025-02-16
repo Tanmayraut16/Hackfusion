@@ -1,6 +1,7 @@
 import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import studentRouter from "../src/routes/student.routes.js"
 
 const app = express()
 
@@ -14,6 +15,6 @@ app.use(express.urlencoded({extended: true, limit: "16kb"}))
 app.use(express.static("public"))
 app.use(cookieParser())
 
-
+app.use('/api/student-login', studentRouter);
 
 export { app }
